@@ -4,7 +4,7 @@
   "description": "Serverless plugin for creating Lambda aliases and integrate with SAM project",
   "main": "src/index.js",
   "scripts": {
-    "test": "nyc --reporter=clover mocha --timeout 10000",
+    "test": "nyc --reporter=lcov mocha --timeout 10000",
     "lint": "eslint .",
     "lint-fix": "eslint --fix ."
   },
