@@ -9,14 +9,16 @@ on:
       - synchronize
       - reopened
 jobs:
-  test:
-    name: 'Node.js Testa 20'
+  sonarcloud:
+    name: SonarCloud
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v1
         with:
-          node-version: '20'
-      - uses: actions/checkout@v2
+            node-version: '20'
       - name: 'Cache node_modules'
         uses: actions/cache@v2
         with:
@@ -28,13 +30,6 @@ jobs:
         run: npm install
       - name: Run All Node.js Tests
         run: npm run test
-  sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
