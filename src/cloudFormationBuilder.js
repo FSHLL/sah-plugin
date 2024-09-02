@@ -20,7 +20,7 @@ function addAliases(aliases, compiledResources, activeAliasName) {
                 acc[`${lambdaName}Alias${alias === activeAliasName ? '' : index}`] = {
                     Type: 'AWS::Lambda::Alias',
                     Properties: {
-                        Name: alias.replace(/[^\w-_]/g, '-'),
+                        Name: alias.replace(/[^\w\-_]/g, '-'),
                         FunctionName: {
                             'Fn::GetAtt': [lambdaName, 'Arn'],
                         },
