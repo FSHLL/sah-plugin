@@ -8,5 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Generate alias in cloud formation template and configure events. [1](https://github.com/FSHLL/sah-plugin/pulls/1)
 
-- Generate alias in cloud formation template and configure events. [1](https://github.com/FSHLL/sam-plugin/pulls/1)
+### Changed
+- Rename SAM Plugin to SAH Plugin. [2](https://github.com/FSHLL/sah-plugin/pulls/2)

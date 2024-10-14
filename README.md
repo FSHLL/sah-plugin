@@ -1,10 +1,10 @@
-# SAM Plugin
+# SAH Plugin
 
 [![serverless][sls-image]][sls-url]
 
 A Serverless plugin to create AWS Lambda aliases without imposing a way-of-working with them.
 
-### This plugin is based in [serverless-simple-alias](https://github.com/digio/serverless-simple-alias), we only add support to other events apart from api gateway and specific functionalities to integrate with [SAM](https://github.com/FSHLL/sam)
+### This plugin is based in [serverless-simple-alias](https://github.com/digio/serverless-simple-alias), we only add support to other events apart from api gateway and specific functionalities to integrate with [SAH](https://github.com/FSHLL/sah)
 
 ## Motivation
 
@@ -14,32 +14,34 @@ This plugin assists with two use cases:
 ## Installation
 
 ```
-npm install --save-dev sam-plugin
+npm install --save-dev sah-plugin
 ```
 
 Add the plugin to serverless.yml:
 
 ```yaml
 plugins:
-  - sam-plugin
+  - sah-plugin
 ```
 
 **Note**: Node 10.x or higher runtime required.
 
 ## Usage
 
-Inside your Serverless config, include this plugin and define a `custom.sam` object and specify the activeAliasName
+Inside your Serverless config, include this plugin and define a `custom.sah` object and specify the activeAliasName
 
 ```yaml
 plugins:
-  - sam-plugin
+  - sah-plugin
   ...
 
 custom:
-  sam:
-    activeAliasName: 'ACTIVE'  # Default: 'INACTIVE'
-    useActiveAliasInGateway: true   # Default: false. Whether to change API Gateway to target the active alias or not
+  sah:
+    activeAliasName: 'ACTIVE'  # Default: 'ACTIVE'
+    useActiveAliasInEvents: true   # Default: false. Whether to change API Gateway to target the active alias or not
     makeLambdasActive: true  # Default: false. Whether to apply the active alias to the lambdas that are being deployed now. Could vary per environment.
+    sahUrl: 'http://{app_url}/api/projects/{project_id}/deployments' # Default: null. It is not mandatory but you can use it if you wish to synchronize your displays with your SAH application.
+    sahToken: '1|fZH1G7lyRZZKcK4AD8PaaQlXlTeeM7bc2XdjOsqBeecfb75f' # Default: null. It is not mandatory but you can use it if you wish to synchronize your displays with your SAH application.
 ```
 
 In practice, different environments have different deployment requirements. For example, in production it

@@ -3,6 +3,7 @@ const runServerless = require('@serverless/test/run-serverless');
 const { baseConfig } = require('./utils');
 const { expect } = require('chai');
 const { describe, it } = require('mocha');
+const SAHPlugin = require('../src');
 
 const serverlessDir = path.resolve('node_modules/serverless');
 
@@ -11,22 +12,22 @@ function getResources(cfTemplate, type) {
     return Object.entries(compiledResources).filter(([, resource]) => resource.Type === type);
 }
 
-describe('SAM Plugin Suite', () => {
+describe('SAH Plugin Suite', () => {
 
     describe('Initialization', () => {
 
-        it('SAM Plugin need the custom object config', async () => {
+        it('SAH Plugin need the custom object config', async () => {
             try {
                 await runServerless(serverlessDir, {
                     command: 'package',
                     config: baseConfig
                 })
             } catch (error) {
-                expect(error.message).equal('sam-plugin: ERROR: Missing custom configuration object')
+                expect(error.message).equal('sah-plugin: ERROR: Missing custom configuration object')
             }
         });
 
-        it('SAM Plugin need sam config in the custom object config', async () => {
+        it('SAH Plugin need sah config in the custom object config', async () => {
             try {
                 await runServerless(serverlessDir, {
                     command: 'package',
@@ -36,25 +37,25 @@ describe('SAM Plugin Suite', () => {
                     }
                 })
             } catch (error) {
-                expect(error.message).equal('sam-plugin: ERROR: Missing custom.sam configuration object')
+                expect(error.message).equal('sah-plugin: ERROR: Missing custom.sah configuration object')
             }
         });
 
-        it('SAM Plugin need activeAliasName in sam config in the custom object config', async () => {
+        it('SAH Plugin need activeAliasName in sah config in the custom object config', async () => {
             try {
                 await runServerless(serverlessDir, {
                     command: 'package',
                     config: {
                         ...baseConfig,
                         custom: {
-                            sam: {
+                            sah: {
                                 activeAliasName: ''
                             }
                         },
                     }
                 })
             } catch (error) {
-                expect(error.message).equal('sam-plugin: ERROR: Missing custom.sam.activeAliasName property')
+                expect(error.message).equal('sah-plugin: ERROR: Missing custom.sah.activeAliasName property')
             }
         });
     })
@@ -67,7 +68,7 @@ describe('SAM Plugin Suite', () => {
                 config: {
                     ...baseConfig,
                     custom: {
-                        sam: {
+                        sah: {
                             makeLambdasActive: false,
                         }
                     },
@@ -85,7 +86,7 @@ describe('SAM Plugin Suite', () => {
                 config: {
                     ...baseConfig,
                     custom: {
-                        sam: {
+                        sah: {
                             makeLambdasActive: true,
                         }
                     },
@@ -103,7 +104,7 @@ describe('SAM Plugin Suite', () => {
                 config: {
                     ...baseConfig,
                     custom: {
-                        sam: {
+                        sah: {
                             makeLambdasActive: true,
                             useActiveAliasInEvents: true
                         }
@@ -128,7 +129,7 @@ describe('SAM Plugin Suite', () => {
                 config: {
                     ...baseConfig,
                     custom: {
-                        sam: {
+                        sah: {
                             makeLambdasActive: true,
                             useActiveAliasInEvents: true
                         }
@@ -151,7 +152,7 @@ describe('SAM Plugin Suite', () => {
                 config: {
                     ...baseConfig,
                     custom: {
-                        sam: {
+                        sah: {
                             makeLambdasActive: true,
                             useActiveAliasInEvents: true
                         }
@@ -166,6 +167,25 @@ describe('SAM Plugin Suite', () => {
                 'WebLambdaFunctionAlias',
                 'AliasArn',
             ])
+        })
+    })
+
+    describe('After Deploy', () => {
+        it('should notify to sah application when sahUrl ans sahToken are config', async () => {
+            const sah = new SAHPlugin({
+                service: {
+                    custom: {
+                        sah: {
+                            makeLambdasActive: true,
+                            useActiveAliasInEvents: true,
+                            sahUrl: 'http://app-url/api/projects/project-id/deployments',
+                            sahToken: '1|fZH1G7lyRZZKcK4AD8PaaQlXlTeeM7bc2XdjOsqBeecfb75f'
+                        }
+                    },
+                }
+            })
+
+            await sah.notifyToSAH()
         })
     })
 });

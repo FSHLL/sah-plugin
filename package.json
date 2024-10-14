@@ -1,7 +1,7 @@
 {
-  "name": "sam-plugin",
+  "name": "sah-plugin",
   "version": "1.0.0",
-  "description": "Serverless plugin for creating Lambda aliases and integrate with SAM project",
+  "description": "Serverless plugin for creating Lambda aliases and integrate with SAH project",
   "main": "src/index.js",
   "scripts": {
     "test": "nyc --reporter=lcov mocha --timeout 10000",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FSHLL/sam-plugin.git"
+    "url": "git+https://github.com/FSHLL/sah-plugin.git"
   },
   "keywords": [
     "serverless",
@@ -20,12 +20,13 @@
   "author": "FSHLL",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/FSHLL/sam-plugin/issues"
+    "url": "https://github.com/FSHLL/sah-plugin/issues"
   },
-  "homepage": "https://github.com/FSHLL/sam-plugin#readme",
+  "homepage": "https://github.com/FSHLL/sah-plugin#readme",
   "devDependencies": {
     "@eslint/js": "^9.9.1",
     "@serverless/test": "^11.1.1",
+    "axios": "^1.7.7",
     "chai": "^4.5.0",
     "eslint": "^9.9.1",
     "globals": "^15.9.0",
