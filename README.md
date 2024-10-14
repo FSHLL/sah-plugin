@@ -37,9 +37,11 @@ plugins:
 
 custom:
   sah:
-    activeAliasName: 'ACTIVE'  # Default: 'INACTIVE'
-    useActiveAliasInGateway: true   # Default: false. Whether to change API Gateway to target the active alias or not
+    activeAliasName: 'ACTIVE'  # Default: 'ACTIVE'
+    useActiveAliasInEvents: true   # Default: false. Whether to change API Gateway to target the active alias or not
     makeLambdasActive: true  # Default: false. Whether to apply the active alias to the lambdas that are being deployed now. Could vary per environment.
+    sahUrl: 'http://{app_url}/api/projects/{project_id}/deployments' # Default: null. It is not mandatory but you can use it if you wish to synchronize your displays with your SAH application.
+    sahToken: '1|fZH1G7lyRZZKcK4AD8PaaQlXlTeeM7bc2XdjOsqBeecfb75f' # Default: null. It is not mandatory but you can use it if you wish to synchronize your displays with your SAH application.
 ```
 
 In practice, different environments have different deployment requirements. For example, in production it

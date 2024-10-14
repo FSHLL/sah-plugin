@@ -83,7 +83,7 @@ class SAHPlugin {
             if (config.sahUrl && config.sahToken) {
                 axios.post(config.sahUrl, {}, {
                     headers: {
-                        Authorization: config.sahToken
+                        Authorization: `Bearer ${config.sahToken}`
                     }
                 })
             }
