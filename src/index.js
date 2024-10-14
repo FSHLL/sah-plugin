@@ -77,18 +77,18 @@ class SAHPlugin {
         throw new this.serverless.classes.Error(err_msg);
     }
 
-    notifyToSAH() {
+    async notifyToSAH() {
         const config = { ...DEFAULT_CONFIG, ...this.serverless.service.custom[PLUGIN_CONFIG_KEY] };
         try {
             if (config.sahUrl && config.sahToken) {
-                axios.post(config.sahUrl, {}, {
+                await axios.post(config.sahUrl, {}, {
                     headers: {
                         Authorization: `Bearer ${config.sahToken}`
                     }
                 })
             }
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
     }
 }

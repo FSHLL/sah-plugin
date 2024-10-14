@@ -3,6 +3,7 @@ const runServerless = require('@serverless/test/run-serverless');
 const { baseConfig } = require('./utils');
 const { expect } = require('chai');
 const { describe, it } = require('mocha');
+const SAHPlugin = require('../src');
 
 const serverlessDir = path.resolve('node_modules/serverless');
 
@@ -166,6 +167,25 @@ describe('SAH Plugin Suite', () => {
                 'WebLambdaFunctionAlias',
                 'AliasArn',
             ])
+        })
+    })
+
+    describe('After Deploy', () => {
+        it('should notify to sah application when sahUrl ans sahToken are config', async () => {
+            const sah = new SAHPlugin({
+                service: {
+                    custom: {
+                        sah: {
+                            makeLambdasActive: true,
+                            useActiveAliasInEvents: true,
+                            sahUrl: 'http://app-url/api/projects/project-id/deployments',
+                            sahToken: '1|fZH1G7lyRZZKcK4AD8PaaQlXlTeeM7bc2XdjOsqBeecfb75f'
+                        }
+                    },
+                }
+            })
+
+            await sah.notifyToSAH()
         })
     })
 });
