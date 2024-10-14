@@ -11,22 +11,22 @@ function getResources(cfTemplate, type) {
     return Object.entries(compiledResources).filter(([, resource]) => resource.Type === type);
 }
 
-describe('SAM Plugin Suite', () => {
+describe('SAH Plugin Suite', () => {
 
     describe('Initialization', () => {
 
-        it('SAM Plugin need the custom object config', async () => {
+        it('SAH Plugin need the custom object config', async () => {
             try {
                 await runServerless(serverlessDir, {
                     command: 'package',
                     config: baseConfig
                 })
             } catch (error) {
-                expect(error.message).equal('sam-plugin: ERROR: Missing custom configuration object')
+                expect(error.message).equal('sah-plugin: ERROR: Missing custom configuration object')
             }
         });
 
-        it('SAM Plugin need sam config in the custom object config', async () => {
+        it('SAH Plugin need sah config in the custom object config', async () => {
             try {
                 await runServerless(serverlessDir, {
                     command: 'package',
@@ -36,25 +36,25 @@ describe('SAM Plugin Suite', () => {
                     }
                 })
             } catch (error) {
-                expect(error.message).equal('sam-plugin: ERROR: Missing custom.sam configuration object')
+                expect(error.message).equal('sah-plugin: ERROR: Missing custom.sah configuration object')
             }
         });
 
-        it('SAM Plugin need activeAliasName in sam config in the custom object config', async () => {
+        it('SAH Plugin need activeAliasName in sah config in the custom object config', async () => {
             try {
                 await runServerless(serverlessDir, {
                     command: 'package',
                     config: {
                         ...baseConfig,
                         custom: {
-                            sam: {
+                            sah: {
                                 activeAliasName: ''
                             }
                         },
                     }
                 })
             } catch (error) {
-                expect(error.message).equal('sam-plugin: ERROR: Missing custom.sam.activeAliasName property')
+                expect(error.message).equal('sah-plugin: ERROR: Missing custom.sah.activeAliasName property')
             }
         });
     })
@@ -67,7 +67,7 @@ describe('SAM Plugin Suite', () => {
                 config: {
                     ...baseConfig,
                     custom: {
-                        sam: {
+                        sah: {
                             makeLambdasActive: false,
                         }
                     },
@@ -85,7 +85,7 @@ describe('SAM Plugin Suite', () => {
                 config: {
                     ...baseConfig,
                     custom: {
-                        sam: {
+                        sah: {
                             makeLambdasActive: true,
                         }
                     },
@@ -103,7 +103,7 @@ describe('SAM Plugin Suite', () => {
                 config: {
                     ...baseConfig,
                     custom: {
-                        sam: {
+                        sah: {
                             makeLambdasActive: true,
                             useActiveAliasInEvents: true
                         }
@@ -128,7 +128,7 @@ describe('SAM Plugin Suite', () => {
                 config: {
                     ...baseConfig,
                     custom: {
-                        sam: {
+                        sah: {
                             makeLambdasActive: true,
                             useActiveAliasInEvents: true
                         }
@@ -151,7 +151,7 @@ describe('SAM Plugin Suite', () => {
                 config: {
                     ...baseConfig,
                     custom: {
-                        sam: {
+                        sah: {
                             makeLambdasActive: true,
                             useActiveAliasInEvents: true
                         }

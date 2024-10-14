@@ -1,19 +1,22 @@
 'use strict';
 
+const { default: axios } = require("axios");
 const { addAliases, addAPIGatewayConfig, addEventRuleConfig, addEventSourceConfig } = require("./cloudFormationBuilder");
 
 // Lifecycle events Cheat sheet: https://gist.github.com/HyperBrain/50d38027a8f57778d5b0f135d80ea406
-const PLUGIN_CONFIG_KEY = 'sam';
-const PLUGIN_NAME = 'sam-plugin';
+const PLUGIN_CONFIG_KEY = 'sah';
+const PLUGIN_NAME = 'sah-plugin';
 
 const DEFAULT_CONFIG = {
     activeAliasName: 'INACTIVE',
     useActiveAliasInEvents: false,
     makeLambdasActive: false,
     aliases: [],
+    sahUrl: '',
+    sahToken: '',
 };
 
-class SAMPlugin {
+class SAHPlugin {
     constructor(serverless) {
         this.serverless = serverless;
 
@@ -21,6 +24,7 @@ class SAMPlugin {
 
         this.hooks = {
             'before:package:finalize': this.updateCloudFormation.bind(this),
+            'after:deploy:finalize': this.notifyToSAH.bind(this),
         };
     }
 
@@ -72,6 +76,21 @@ class SAMPlugin {
         const err_msg = `${PLUGIN_NAME}: ERROR: ${msg}`;
         throw new this.serverless.classes.Error(err_msg);
     }
+
+    notifyToSAH() {
+        const config = { ...DEFAULT_CONFIG, ...this.serverless.service.custom[PLUGIN_CONFIG_KEY] };
+        try {
+            if (config.sahUrl && config.sahToken) {
+                axios.post(config.sahUrl, {}, {
+                    headers: {
+                        Authorization: config.sahToken
+                    }
+                })
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
 
-module.exports = SAMPlugin
+module.exports = SAHPlugin

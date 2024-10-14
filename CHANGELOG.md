@@ -9,4 +9,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Generate alias in cloud formation template and configure events. [1](https://github.com/FSHLL/sam-plugin/pulls/1)
+- Generate alias in cloud formation template and configure events. [1](https://github.com/FSHLL/sah-plugin/pulls/1)
